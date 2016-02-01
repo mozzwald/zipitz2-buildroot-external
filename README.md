@@ -16,7 +16,7 @@ for tarball image (SD Card) or:
 for a small jffs2 image (internal NOR flash). This will tell Buildroot to use the files in this repo. You can now build Buildroot running _make_ or configure further with _make menuconfig_, _make linux-menuconfig_, or _make busybox-config_. 
 
 ## JFFS / Kernel Size
-Sizes required to fit internal NOR flash on the zipit:
+Maximum sizes to fit internal NOR flash on the Zipit:
 
 - Kernel (MTD2): 1,179,648 Bytes
 - JFFS   (MTD3): 6,684,672 Bytes
