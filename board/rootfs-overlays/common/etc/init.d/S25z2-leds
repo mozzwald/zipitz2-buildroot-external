@@ -8,8 +8,8 @@ case "$1" in
 	echo "Setting up Zipit Z2 LED's..."
 	echo "none" > /sys/class/leds/z2:green:wifi/trigger
 	echo "mmc0" > /sys/class/leds/z2:green:charged/trigger
-	echo "Z2-charging" > /sys/class/leds/z2:amber:charging/trigger
-	if [ "$(cat /sys/class/power_supply/Z2/status)" == "Charging" ]; then
+	echo "Z2-charging-blink-full-solid" > /sys/class/leds/z2:amber:charging/trigger
+	if [ "$(cat /sys/class/power_supply/Z2/status)" == "Full" ]; then
 		echo "255" > /sys/class/leds/z2:amber:charging/brightness &
 	fi
 	;;
