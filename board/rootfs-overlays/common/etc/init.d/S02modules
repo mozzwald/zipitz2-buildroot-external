@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# Load kernel modules
+#
+
+case "$1" in
+  start)
+	echo "Loading modules..."
+	[ -d /etc/modules.d ] && {
+		cd /etc/modules.d
+		sed 's/^[^#]/modprobe &/' * | ash 2>&- || :
+	}
+	;;
+  stop)
+	echo "Unloading modules..."
+	[ -d /etc/modules.d ] && {
+		cd /etc/modules.d
+		sed 's/^[^#]/modprobe -r &/' * | ash 2>&- || :
+	}
+	;;
+  restart|reload)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?

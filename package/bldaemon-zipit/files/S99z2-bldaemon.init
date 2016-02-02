@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# Start Zipit Z2 Backlight Daemon
+#
+
+case "$1" in
+  start)
+	/usr/sbin/bldaemon &
+	;;
+  stop)
+	killall bldaemon
+	;;
+  restart|reload)
+	killall bldaemon
+	/usr/sbin/bldaemon &
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?

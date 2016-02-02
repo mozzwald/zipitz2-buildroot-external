@@ -1,0 +1,6 @@
+config BR2_PACKAGE_BLDAEMON_ZIPIT
+	bool "bldaemon-zipit"
+	help
+	  bldaemon-zipit: Automatic backlight controls for Zipit Z2
+
+	  https://github.com/engine12/bldaemon-zipit

@@ -1,0 +1,70 @@
+#!/bin/sh
+#echo -ne "\nPreparing devices.... \n"
+
+if [ -z "$1" ]; then
+	IFACE=wlan0
+	WPACONF=/etc/wpa.conf
+else
+	IFACE=$1
+	WPACONF=$2
+fi
+
+echo "Using config: $IFACE, $WPACONF"
+
+# uncomment for static ip
+#IPADDR=192.168.1.249  
+
+rmmod batman-adv 2>/dev/null
+killall wpa_supplicant 2>/dev/null
+rm -rf /var/run/wpa_supplicant 2>/dev/null
+ifconfig $IFACE down 2>/dev/null
+ifconfig bat0 0.0.0.0 2>/dev/null
+ifdown -a
+
+#echo -ne "\nSetting up interface $1 \n"
+#echo ""
+if [ -e /etc/config/wireless ]; then
+
+	macaddr=`sed -e 's/ //g' -e "/macaddr/!d" -e "s/\toption'macaddr''//g" -e "s/'//g" /etc/config/wireless`
+else
+	macaddr=00:11:01:00:10:11
+	#echo -e "\nUsing default Zipit MAC 00:11:01:00:10:11"
+	#echo "You can set the correct MAC located under the"
+	#echo "battery to /etc/config/wireless in the format:"
+	#echo -e "a1:b2:c3:d4:e5:f6\n"
+
+fi
+
+ifconfig $IFACE hw ether $macaddr 2>/dev/null
+	
+if [ $? -ne 0 ]; then
+	#echo -e "\nUnable to set MAC Address!"
+	exit 1
+fi
+
+#echo wpa_supplicant is not running, start it
+
+wpa_supplicant -B -Dwext -i"$IFACE" -c"$WPACONF" &>/dev/null
+
+
+ifconfig "$IFACE" up "$IPADDR" 2>/dev/null
+
+if [ -ne $IPADDR ]; then
+	udhcpc -i "$IFACE" -q -n &>/dev/null
+	if [ $? -ne 0 ]; then
+		#echo -e "\nUnable to obtain ip address"
+		#echo ""
+		killall wpa_supplicant &2>/dev/null
+		ifconfig $IFACE down &2>/dev/null
+		ifdown -a
+
+		exit 1		
+	fi
+fi
+
+ifup loopback
+
+#/etc/init.d/htpdate restart
+
+#echo -ne "\nConnected to Network\n"
+exit 0

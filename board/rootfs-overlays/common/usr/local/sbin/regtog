@@ -1,0 +1,19 @@
+#!/bin/sh
+# Toggle external 5V regulator via GPIO 54
+
+val=`cat /sys/class/gpio/gpio42/value`
+if [ $val -eq 0 ]; then
+	val=`cat /sys/class/gpio/gpio54/value`
+	if [ $val -eq 1 ]; then
+		echo "0" > /sys/class/gpio/gpio54/value
+		echo "External 5V Regulator Disabled"
+	else
+		echo "1" > /sys/class/gpio/gpio54/value
+		echo "External 5V Regulator Enabled"
+	fi
+	sleep 1
+else
+	echo "Breakout board not connected"
+	echo "External 5V Regulator Disabled"
+	echo "0" > /sys/class/gpio/gpio54/value
+fi
