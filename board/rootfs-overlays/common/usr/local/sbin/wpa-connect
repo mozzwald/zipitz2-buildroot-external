@@ -64,7 +64,10 @@ fi
 
 ifup loopback
 
-#/etc/init.d/htpdate restart
+if [ -x /usr/bin/htpdate ]; then
+	# Update the time
+	/usr/bin/htpdate -t -s google.com linux.org &> /dev/null &
+fi
 
 #echo -ne "\nConnected to Network\n"
 exit 0

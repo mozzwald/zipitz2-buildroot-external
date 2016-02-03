@@ -2,3 +2,4 @@ menu "Zipit Z2 Specific"
 	source "$BR2_EXTERNAL/package/bldaemon-zipit/Config.in"
 endmenu
 
+source "$BR2_EXTERNAL/package/htpdate/Config.in"

@@ -44,7 +44,7 @@ The zipit keymap and screen font are loaded in _/etc/inittab_. Slug_'s version o
 - ~~Fix mtd partition layout in kernel to match openwrt~~
 - Slim down busybox
 - Create suspend script (disable/renable wifi)
-- ntp/htpdate/? time sync
+- ~~ntp/htpdate/? time sync~~
 - wifi search/add script?
 - put zipit specific scripts into menuconfig as indivdual packages?
 - lots more, I'm sure :-)
