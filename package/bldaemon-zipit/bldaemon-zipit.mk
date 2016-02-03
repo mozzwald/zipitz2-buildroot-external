@@ -1,8 +1,8 @@
 BLDAEMON_ZIPIT_VERSION = master 
-BLDAEMON_ZIPIT_SITE = $(call github,engine12,bldaemon-zipit,$(BLDAEMON_ZIPIT_VERSION))
+BLDAEMON_ZIPIT_SITE = $(call github,mozzwald,bldaemon-zipit,$(BLDAEMON_ZIPIT_VERSION))
 
 define BLDAEMON_ZIPIT_BUILD_CMDS
-	$(TARGET_CC) $(TARGET_CFLAGS) -lrt $(@D)/bldaemon.c -o $(@D)/bldaemon
+	$(TARGET_CC) $(TARGET_CFLAGS) -lrt -lpthread $(@D)/bldaemon.c -o $(@D)/bldaemon
 endef
 
 define BLDAEMON_ZIPIT_INSTALL_TARGET_CMDS
